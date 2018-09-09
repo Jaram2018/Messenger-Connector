@@ -1,4 +1,4 @@
-package com.msg.messengerconnector;
+package com.bkmc.messengerconnector;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

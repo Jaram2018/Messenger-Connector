@@ -1,4 +1,4 @@
-package com.bkmc.messengerconnector.config;
+package com.bkmc.messengerconnector.message;
 
 /**
  * Created by IntelliJ IDEA.
@@ -6,8 +6,7 @@ package com.bkmc.messengerconnector.config;
  * ===========================================
  * User: ByeongGil Jung
  * Date: 2018-09-09
- * Time: 오후 5:17
+ * Time: 오후 5:15
  */
-public enum Messenger {
-    ADMIN, KAKAOTALK, SLACK, NONE
+public class BasicMessage extends Message {
 }

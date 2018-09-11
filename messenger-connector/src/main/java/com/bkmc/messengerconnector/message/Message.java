@@ -6,23 +6,25 @@ import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
- * Project: messengers-Connector
+ * Project: Messenger-Connector
  * ===========================================
  * User: ByeongGil Jung
- * Date: 2018-09-09
- * Time: 오후 5:15
+ * Date: 2018-09-11
+ * Time: 오전 10:00
  */
-public class MessageDTO {
+public abstract class Message {
 
     private Messenger messenger;
-    private String channel;
+    private String channelFrom;
+    private String channelTo;
     private String sender;
     private String context;
     private Date date;
 
-    public MessageDTO() {
+    public Message() {
         this.messenger = Messenger.NONE;
-        this.channel = "None";
+        this.channelFrom = "None";
+        this.channelTo = "None";
         this.sender = "None";
         this.context = "None";
         this.date = new Date();
@@ -36,12 +38,20 @@ public class MessageDTO {
         this.messenger = messenger;
     }
 
-    public String getChannel() {
-        return channel;
+    public String getChannelFrom() {
+        return channelFrom;
     }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setChannelFrom(String channelFrom) {
+        this.channelFrom = channelFrom;
+    }
+
+    public String getChannelTo() {
+        return channelTo;
+    }
+
+    public void setChannelTo(String channelTo) {
+        this.channelTo = channelTo;
     }
 
     public String getSender() {
@@ -70,9 +80,10 @@ public class MessageDTO {
 
     @Override
     public String toString() {
-        return "MessageDTO{" +
+        return "Message{" +
                 "messenger=" + messenger +
-                ", channel='" + channel + '\'' +
+                ", channelFrom='" + channelFrom + '\'' +
+                ", channelTo='" + channelTo + '\'' +
                 ", sender='" + sender + '\'' +
                 ", context='" + context + '\'' +
                 ", date=" + date +

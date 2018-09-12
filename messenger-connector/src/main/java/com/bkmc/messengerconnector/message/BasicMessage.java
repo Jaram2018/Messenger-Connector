@@ -2,7 +2,7 @@ package com.bkmc.messengerconnector.message;
 
 /**
  * Created by IntelliJ IDEA.
- * Project: messengers-Connector
+ * Project: Messenger-Connector
  * ===========================================
  * User: ByeongGil Jung
  * Date: 2018-09-09

@@ -1,5 +1,6 @@
 package com.bkmc.messengerconnector.config;
 
+import com.bkmc.messengerconnector.messagehub.messengerhub.AdminMessageHub;
 import com.bkmc.messengerconnector.messagehub.messengerhub.KakaotalkMessageHub;
 import com.bkmc.messengerconnector.messagehub.OutMessageHub;
 import com.bkmc.messengerconnector.messagehub.messengerhub.SlackMessageHub;
@@ -23,6 +24,9 @@ public class AppliactionStartedHandler implements ApplicationListener<Applicatio
     OutMessageHub outMessageHub;
 
     @Autowired
+    AdminMessageHub adminMessageHub;
+
+    @Autowired
     KakaotalkMessageHub kakaotalkMessageHub;
 
     @Autowired
@@ -34,6 +38,8 @@ public class AppliactionStartedHandler implements ApplicationListener<Applicatio
          * @TODO changing System.out to Log
          */
         System.out.println("Putting Message-Hubs ...");
+        outMessageHub.hubMapPutElement(Messenger.ADMIN.getValue(), adminMessageHub);
+        System.out.println("Succeed putting 'Admin' Message-Hub");
         outMessageHub.hubMapPutElement(Messenger.KAKAOTALK.getValue(), kakaotalkMessageHub);
         System.out.println("Succeed putting 'Kakaotalk' Message-Hub");
         outMessageHub.hubMapPutElement(Messenger.SLACK.getValue(), slackMessageHub);

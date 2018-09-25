@@ -29,10 +29,10 @@ public class SlackHttpCallProcess {
     private String oAuthToken = Settings.SLACK_OAUTH_TOKEN.getValue();
     private String webSocketUrl = Settings.SLACK_WEBHOOK_URL.getValue();
 
-    private HttpClient httpClient = HttpClientBuilder.create().build();
-
     public void sendMessageToSlack(Message message) throws IOException {
+        HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost(webSocketUrl);
+
         String senderStr = String.format("%s [%s | %s]", message.getSender(), message.getMessengerFrom(), message.getChannelFrom());
         String textStr = message.getContext();
         /*
@@ -55,7 +55,7 @@ public class SlackHttpCallProcess {
 
     public String getUserInfo(String userId) throws IOException {
         String url = "https://slack.com/api/users.info?token=" + oAuthToken + "&user=" + userId;
-
+        HttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
         CloseableHttpResponse httpResponse = (CloseableHttpResponse) httpClient.execute(request);
 

@@ -46,6 +46,14 @@ public class SlackController implements IController {
         Message message = new Message();
 
         HashMap entireMsgJson = mapper.readValue(body, HashMap.class);
+        // At the first authentication
+        if (entireMsgJson.containsKey("challenge")) {
+            String challengeValue = (String) entireMsgJson.get("challenge");
+            entireMsgJson.clear();
+            entireMsgJson.put("challenge", challengeValue);
+            return entireMsgJson;
+        }
+
         HashMap eventMsgJson = (HashMap) entireMsgJson.get("event");
 
         if (!eventMsgJson.containsKey("bot_id")) {
@@ -75,18 +83,18 @@ public class SlackController implements IController {
     }
 
     @RequestMapping("/slack/send")
-    public ArrayList slackMessageSender() throws IOException {
+    public Map slackMessageSender() throws IOException {
+        Map output = new HashMap();
         ArrayList msgList = slackMessageHub.pollAllMessage();
         ArrayList formattedMessageList = formattingProcess(msgList);
-        System.out.println(formattedMessageList);
 
         for (Object message : msgList) {
-            System.out.println("1" + message);
             slackHttpCallProcess.sendMessageToSlack((Message) message);
-            System.out.println("2" + message);
         }
 
-        return formattedMessageList;
+        output.put("message_list", formattedMessageList);
+
+        return output;
     }
 
     @RequestMapping("/slack/oauth")

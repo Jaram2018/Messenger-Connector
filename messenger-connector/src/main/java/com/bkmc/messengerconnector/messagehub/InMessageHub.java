@@ -29,10 +29,10 @@ public class InMessageHub implements IMessageHub {
     // 이 부분을 쓰레드로 만들면 좋읋 것 같은데...
     // 1 초 정도마다 큐에 저장된 모든 메세지를 처리하게끔 ...
     public void handlingMessage() {
-        ArrayList handledMessageList = messageHandler.execute();
+        Queue handledMessageQueue = messageHandler.execute(inMsgQ);
 
-        for (Object message : handledMessageList) {
-            outMessageHub.addMessage((Message) message);
+        while (!handledMessageQueue.isEmpty()) {
+            outMessageHub.addMessage((Message) handledMessageQueue.poll());
         }
     }
 
@@ -49,8 +49,9 @@ public class InMessageHub implements IMessageHub {
     @Override
     public ArrayList pollAllMessage() {
         ArrayList<Message> messages = new ArrayList<>();
+        int size = inMsgQ.size();
 
-        for (int i = 0; i< inMsgQ.size(); i++) {
+        for (int i=0; i<size; i++) {
             Message message = inMsgQ.poll();
             messages.add(message);
         }

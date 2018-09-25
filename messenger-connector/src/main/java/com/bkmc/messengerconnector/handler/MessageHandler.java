@@ -4,10 +4,7 @@ import com.bkmc.messengerconnector.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,11 +22,11 @@ public class MessageHandler {
 
     private Queue<Message> outMessageQueue = new ArrayDeque<>();
 
-    public Queue execute(Queue inMessageQueue) {
+    public Queue<Message> execute(Queue<Message> inMessageQueue) {
         while(!inMessageQueue.isEmpty()) {
             Message handledMessage;
 
-            Message message = (Message) inMessageQueue.poll();
+            Message message = inMessageQueue.poll();
             String context = message.getContext();
 
             CommandAndContext cAndc = getCommandAndContext(context);
@@ -71,14 +68,11 @@ public class MessageHandler {
      */
     public static class CommandAndContext {
 
-        private List commands = Collections.singletonList(new char[]{'@', '!'});
         private Character command;
         private String[] contextArray;
 
         public CommandAndContext(Character command, String[] contextArray) {
-            if (commands.contains(command)) {
-                this.command = command;
-            }
+            this.command = command;
             this.contextArray = contextArray;
         }
 

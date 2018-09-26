@@ -34,8 +34,9 @@ public class SlackMessageHub implements IMessageHub {
     @Override
     public ArrayList pollAllMessage() {
         ArrayList<Message> messages = new ArrayList<>();
+        int size = slackMsgQ.size();
 
-        for (int i=0; i<slackMsgQ.size(); i++) {
+        for (int i=0; i<size; i++) {
             Message message = slackMsgQ.poll();
             messages.add(message);
         }

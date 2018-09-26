@@ -1,5 +1,6 @@
 package com.bkmc.messengerconnector.handler;
 
+import com.bkmc.messengerconnector.config.Command;
 import com.bkmc.messengerconnector.handler.function.ApplicationFunction;
 import com.bkmc.messengerconnector.handler.function.Function;
 import com.bkmc.messengerconnector.handler.function.NoneFunction;
@@ -25,11 +26,11 @@ public class FunctionController {
     public Message getHandledMessage() {
         Function function;
 
-        if (command.equals('@')) {
+        if (command.equals(Command.ANNOTATION.getValue())) {
             function = new ApplicationFunction();
             function.setContextArray(contextArray);
             function.setMessage(message);
-        } else if (command.equals('!')) {
+        } else if (command.equals(Command.EXCLAMATION.getValue())) {
             function = new SlackFunction();
             function.setContextArray(contextArray);
             function.setMessage(message);
@@ -39,7 +40,7 @@ public class FunctionController {
             function.setMessage(message);
         }
 
-        return function.getHandledMessage(contextArray);
+        return function.getHandledMessage();
     }
 
     public void setCommand(Character command) {

@@ -13,7 +13,7 @@ import com.bkmc.messengerconnector.message.Message;
 public class ApplicationFunction extends Function {
 
     @Override
-    public Message getHandledMessage(String[] contextArray) {
+    public Message getHandledMessage() {
         return message;
     }
 }

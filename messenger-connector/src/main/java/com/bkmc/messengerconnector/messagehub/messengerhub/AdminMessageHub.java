@@ -13,31 +13,31 @@ import java.util.Queue;
  * Project: Messenger-Connector
  * ===========================================
  * User: ByeongGil Jung
- * Date: 2018-09-09
- * Time: 오후 6:31
+ * Date: 2018-09-22
+ * Time: 오후 7:58
  */
 @Service
-public class KakaotalkMessageHub implements IMessageHub {
+public class AdminMessageHub implements IMessageHub {
 
-    private Queue<Message> kakaotalkMsgQ = new ArrayDeque<>();
+    private Queue<Message> adminMsgQ = new ArrayDeque<>();
 
     @Override
     public boolean addMessage(Message message) {
-        return kakaotalkMsgQ.add(message);
+        return adminMsgQ.add(message);
     }
 
     @Override
     public Message pollMessage() {
-        return kakaotalkMsgQ.poll();
+        return adminMsgQ.poll();
     }
 
     @Override
     public ArrayList pollAllMessage() {
         ArrayList<Message> messages = new ArrayList<>();
-        int size = kakaotalkMsgQ.size();
+        int size = adminMsgQ.size();
 
         for (int i=0; i<size; i++) {
-            Message message = kakaotalkMsgQ.poll();
+            Message message = adminMsgQ.poll();
             messages.add(message);
         }
 

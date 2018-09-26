@@ -1,6 +1,5 @@
 package com.bkmc.messengerconnector.messagehub;
 
-import com.bkmc.messengerconnector.config.Messenger;
 import com.bkmc.messengerconnector.message.Message;
 import org.springframework.stereotype.Service;
 
@@ -18,25 +17,23 @@ import java.util.*;
 public class OutMessageHub implements IMessageHub {
 
     private Queue<Message> outMsgQ = new ArrayDeque<>();
-    private Map<Messenger, IMessageHub> hubMap = new HashMap<>();
+    private Map<String, IMessageHub> messageHubMap = new HashMap<>();
 
-    public IMessageHub hubMapPutElement(Messenger messenger, IMessageHub messageHub) {
-        return hubMap.put(messenger, messageHub);
+    public IMessageHub hubMapPutElement(String messenger, IMessageHub messageHub) {
+        return messageHubMap.put(messenger, messageHub);
     }
 
-    public IMessageHub hubMapRemoveElement(Messenger messenger, IMessageHub messageHub) {
-        return hubMap.remove(messenger);
+    public IMessageHub hubMapRemoveElement(String messenger, IMessageHub messageHub) {
+        return messageHubMap.remove(messenger);
     }
 
     @Override
     public boolean addMessage(Message message) {
-        // If these aren't same messenger, put the messagehub to messageHub
-        for (Messenger messenger : hubMap.keySet()) {
-            hubMap.get(messenger).addMessage(message);
-//            if (message.getMessenger() != messenger)
-//                hubMap.get(messenger).addMessage(message);
+        // If exists messenger that is contained in 'messengerTo', insert the message to message-hub
+        for (String messenger : message.getMessengerTo()) {
+            messageHubMap.get(messenger).addMessage(message);
         }
-        return outMsgQ.add(message);
+        return true;
     }
 
     @Override
@@ -47,8 +44,9 @@ public class OutMessageHub implements IMessageHub {
     @Override
     public ArrayList pollAllMessage() {
         ArrayList<Message> messages = new ArrayList<>();
+        int size = outMsgQ.size();
 
-        for (int i = 0; i< outMsgQ.size(); i++) {
+        for (int i=0; i<size; i++) {
             Message message = outMsgQ.poll();
             messages.add(message);
         }

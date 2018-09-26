@@ -2,6 +2,7 @@ package com.bkmc.messengerconnector.handler.function;
 
 import com.bkmc.messengerconnector.message.Message;
 
+
 /**
  * Created by IntelliJ IDEA.
  * Project: Messenger-Connector
@@ -13,7 +14,9 @@ import com.bkmc.messengerconnector.message.Message;
 public class NoneFunction extends Function {
 
     @Override
-    public Message getHandledMessage(String[] contextArray) {
+    public Message getHandledMessage() {
+        // default
+        sendToOtherMessengers();
         return message;
     }
 }

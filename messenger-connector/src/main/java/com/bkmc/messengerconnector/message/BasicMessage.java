@@ -9,4 +9,7 @@ package com.bkmc.messengerconnector.message;
  * Time: 오후 5:15
  */
 public class BasicMessage extends Message {
+
+    public BasicMessage() {
+    }
 }

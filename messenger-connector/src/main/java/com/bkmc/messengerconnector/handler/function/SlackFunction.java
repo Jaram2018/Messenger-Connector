@@ -13,7 +13,9 @@ import com.bkmc.messengerconnector.message.Message;
 public class SlackFunction extends Function {
 
     @Override
-    public Message getHandledMessage(String[] contextArray) {
+    public Message getHandledMessage() {
+        // default
+        sendToOtherMessengers();
         return message;
     }
 }

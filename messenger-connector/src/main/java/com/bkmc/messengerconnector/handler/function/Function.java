@@ -1,6 +1,9 @@
 package com.bkmc.messengerconnector.handler.function;
 
+import com.bkmc.messengerconnector.config.Messenger;
 import com.bkmc.messengerconnector.message.Message;
+
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,5 +26,26 @@ public abstract class Function {
         this.message = message;
     }
 
-    public abstract Message getHandledMessage(String[] contextArray);
+    public abstract Message getHandledMessage();
+
+    protected void sendToOtherMessengers() {
+        ArrayList<String> messengerTo = message.getMessengerTo();
+        String messengerFrom = message.getMessengerFrom();
+
+        for (Messenger value : Messenger.values()) {
+            if (!value.getValue().equals(Messenger.NONE.getValue()) && !value.getValue().equals(messengerFrom)) {
+                messengerTo.add(value.getValue());
+            }
+        }
+    }
+
+    protected void sendToKakaotalk() {
+        ArrayList<String> messengerTo = message.getMessengerTo();
+        messengerTo.add(Messenger.KAKAOTALK.getValue());
+    }
+
+    protected void sendToSlack() {
+        ArrayList<String> messengerTo = message.getMessengerTo();
+        messengerTo.add(Messenger.SLACK.getValue());
+    }
 }

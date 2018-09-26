@@ -48,19 +48,19 @@ public class MessageHandler {
      * @return char command, String[] contextArray
      */
     private CommandAndContext getCommandAndContext(String context) {
-        char command;
-        String[] splittedText = context.split("\\s");
-        String[] splittedFirstWord = splittedText[0].split("");
+        Character command;
+        String[] splitText = context.split("\\s");
+        String[] splitFirstWord = splitText[0].split("");
 
         StringBuilder builder = new StringBuilder();
-        for (int i=1; i<splittedFirstWord.length; i++) {
-            builder.append(splittedFirstWord[i]);
+        for (int i=1; i<splitFirstWord.length; i++) {
+            builder.append(splitFirstWord[i]);
         }
 
-        command = splittedFirstWord[0].charAt(0);
-        splittedText[0] = builder.toString();
+        command = splitFirstWord[0].charAt(0);
+        splitText[0] = builder.toString();
 
-        return new CommandAndContext(command, splittedText);
+        return new CommandAndContext(command, splitText);
     }
 
     /**

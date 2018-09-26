@@ -47,7 +47,7 @@ public class KakaotalkController implements IController {
         msgDTO.setContext(context);
 
         inMessageHub.addMessage(msgDTO);
-        System.out.println("Success inserting kakaotalk message to messagehub");
+        // System.out.println("Success inserting kakaotalk message to messagehub");
         inMessageHub.handlingMessage();
 
         return "Success";

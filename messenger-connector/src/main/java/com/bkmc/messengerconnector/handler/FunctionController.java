@@ -40,7 +40,7 @@ public class FunctionController {
             function.setMessage(message);
         }
 
-        return function.getHandledMessage(contextArray);
+        return function.getHandledMessage();
     }
 
     public void setCommand(Character command) {

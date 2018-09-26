@@ -41,7 +41,7 @@ public class SlackController implements IController {
 
     @RequestMapping("/slack/event")
     public Map slackEventListener(@RequestBody String body) throws IOException {
-        System.out.println(body);
+        // System.out.println(body);
 
         Message message = new Message();
 
@@ -56,6 +56,7 @@ public class SlackController implements IController {
 
         HashMap eventMsgJson = (HashMap) entireMsgJson.get("event");
 
+        // If sender is a human or bot
         if (!eventMsgJson.containsKey("bot_id")) {
             String user = (String) eventMsgJson.get("user");
             String text = (String) eventMsgJson.get("text");
@@ -72,8 +73,11 @@ public class SlackController implements IController {
             message.setSender(displayName);
             message.setContext(text);
 
-            System.out.println(displayName);
-            System.out.println(text);
+            // Check if the sender is a bot ot not
+            message = slackBotController(message, eventMsgJson);
+
+            // System.out.println(displayName);
+            // System.out.println(text);
 
             inMessageHub.addMessage(message);
             inMessageHub.handlingMessage();
@@ -116,5 +120,14 @@ public class SlackController implements IController {
         }
 
         return msgList;
+    }
+
+    private Message slackBotController(Message message, Map eventMsgJson) {
+        // If the sender is a SlackBot
+        if (eventMsgJson.containsValue("USLACKBOT")) {
+            SlackBotController slackBotController = new SlackBotController(message);
+            message = slackBotController.getHandledMessage();
+        }
+        return message;
     }
 }
